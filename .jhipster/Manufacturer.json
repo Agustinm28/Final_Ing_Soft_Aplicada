@@ -1,0 +1,22 @@
+{
+  "applications": ["carDealership"],
+  "changelogDate": "20231204140214",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "manufacturer",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Manufacturer",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}
