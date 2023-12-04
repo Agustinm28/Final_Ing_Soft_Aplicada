@@ -7,11 +7,11 @@ import {
 } from '../../support/commands';
 
 describe('login modal', () => {
-  const username = Cypress.env('E2E_USERNAME') ?? 'user';
-  const password = Cypress.env('E2E_PASSWORD') ?? 'user';
+  const username = Cypress.env('E2E_USERNAME');
+  const password = Cypress.env('E2E_PASSWORD');
 
   beforeEach(() => {
-    cy.visit('');
+    cy.visit('http://192.168.0.235:8080/');
     cy.clickOnLoginItem();
   });
 
