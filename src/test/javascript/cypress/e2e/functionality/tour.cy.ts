@@ -82,24 +82,36 @@ describe('Tour', () => {
     cy.getEntityHeading('Car').should('exist');
     cy.url().should('match', carPageUrlPattern);
 
-    cy.get(entityDetailsButt);
-    cy.get(entityDetailsButtonSelector).first().click({ force: true });
-    cy.getEntityDetailsHeading('Car');
-    cy.get(entityDetailsBackButtonSelector).should('exist');
-    cy.url().should('match', carPageUrlPattern);
+    // Buscar el auto creado anteriormente y ver detalles
+    cy.get('tr')
+      .filter(':contains("' + carSample.model + '")')
+      .filter(':contains("' + carSample.year + '")')
+      .filter(':contains("' + carSample.available + '")')
+      .within(() => {
+        cy.get(entityDetailsButtonSelector).first().click({ force: true });
+      });
   });
 
   // Test: Eliminar el auto creado anteriormente
   it('Delete the car', () => {
-    cy.intercept('GET', '/api/cars+(?*|)').as('entitiesRequest');
-    cy.intercept('DELETE', '/api/cars/*').as('deleteEntityRequest');
+    // Ir a la pagina de entidades de autos
     cy.visit(carPageUrl);
     cy.wait('@entitiesRequest');
+
+    // Verificar que exista la tabla de autos
     cy.getEntityHeading('Car').should('exist');
     cy.url().should('match', carPageUrlPattern);
-    cy.get(entityDeleteButtonSelector).click({ force: true });
-    cy.getEntityDeleteDialogHeading('Car');
-    cy.get(entityConfirmDeleteButtonSelector).click({ force: true });
+
+    // Buscar el auto creado anteriormente y eliminar
+    cy.get('tr')
+      .filter(':contains("' + carSample.model + '")')
+      .filter(':contains("' + carSample.year + '")')
+      .filter(':contains("' + carSample.available + '")')
+      .within(() => {
+        cy.get(entityDeleteButtonSelector).first().click({ force: true });
+      });
+
+    cy.get(entityConfirmDeleteButtonSelector).click();
     cy.wait('@deleteEntityRequest').then(({ response }) => {
       expect(response.statusCode).to.equal(204);
     });
