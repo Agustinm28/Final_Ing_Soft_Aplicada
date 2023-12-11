@@ -576,7 +576,15 @@
                             </platforms>
                         </from>
                         <to>
-                            <image>cardealership:latest</image>
+                            <image>agustinm28/ing-soft-aplicada-final:latest</image>
+                            <tags>
+                                <tag>${project.version}</tag>
+                                <tag>latest</tag>
+                            </tags>
+                            <auth>
+                                <username>${DOCKER_REGISTRY_USER}</username>
+                                <password>${DOCKER_REGISTRY_PWD}</password>
+                            </auth>
                         </to>
                         <container>
                             <entrypoint>
